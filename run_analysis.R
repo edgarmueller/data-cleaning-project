@@ -12,7 +12,9 @@ concat = function(trainFile, testFile) {
 mapActivityIdToLabel = function(activityIds) {
   activityLabels = fread("activity_labels.txt")
   colnames(activityLabels) = c("activityId", "activityLabel")
-  x = vapply(activityIds, function(id)  subset(activityLabels, activityId == id, select = c("activityLabel")), list(1) )
+  x = vapply(activityIds, 
+             function(id) subset(activityLabels, activityId == id, select = c("activityLabel")),
+             list(1))
   unlist(x)
 }
 
@@ -75,4 +77,5 @@ tidyData = allData %>%
 # Map activity IDs to respective labels (3)
 tidyData$Activity = mapActivityIdToLabel(tidyData$Activity)
 
+# Write tidy data set (5)
 write.table(tidyData, "tidy-data.txt", row.names = FALSE, quote = FALSE)
